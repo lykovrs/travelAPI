@@ -46,7 +46,7 @@ function Sorter(arr, opt){
     /**
      * Создает коллекцию объектов из карточек.
      *
-     * @param {array} arr Исходный массив с карточками.
+     * @param {object} arr Исходный массив с карточками.
      */
     function createCollection(arr){
         for(var i = 0; i < arr.length; i++){
