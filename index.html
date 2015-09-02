@@ -1,1 +1,6 @@
-<!DOCTYPE html><html><head><meta charset="utf-8"><!--if lt IE 9script(src='http://html5shiv.googlecode.com/svn/trunk/html5.js')--><title></title><meta name="keywords" content=""><meta name="description" content=""><link href="style.css" rel="stylesheet"></head><body><div class="wrapper"><header class="header"><h1>Сортировщик карточек путешественника</h1><!-- .header--></header><main class="content"><ul id="container" class="list"></ul></main><!-- .content--></div><!-- .wrapper--><script src="SorterTravelerCards.js"></script></body></html>
+<!DOCTYPE html><html><head><meta charset="utf-8"><!--if lt IE 9script(src='http://html5shiv.googlecode.com/svn/trunk/html5.js')--><title></title><meta name="keywords" content=""><meta name="description" content=""><link href="style.css" rel="stylesheet"><script src="cards.js"></script><script src="SorterTravelerCards.js"></script><script type="text/javascript">var options = {
+    selector: 'container',
+    itemTag: 'li',
+    itemTagClassName: 'list__item'
+};
+var sorter = new Sorter(cards, options);</script></head><body><div class="wrapper"><header class="header"><h1>Сортировщик карточек путешественника</h1><!-- .header--></header><main class="content"><ul id="container" class="list"></ul></main><!-- .content--></div><!-- .wrapper--><script>sorter.run();</script></body></html>
