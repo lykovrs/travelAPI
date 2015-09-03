@@ -96,19 +96,19 @@ function Sorter(arr, opt){
         return node;
     }
 
-    /**
-     * Создает текстовый шаблон в зависимости от типа транспорта.
-     *
-     * @constructor
-     * @param {object} params объект с параметрами.
-     * @return {string} Заполненный данными текстовый шаблон.
-     */
     var templates = {
         train: 'Take train {number} from {name} to {nextRouteName}. Seat {seat}.',
         'bus': 'Take the airport bus from {name} to {nextRouteName}. {seat}.',
         'aircraft': 'From {name}, take flight {number} to {nextRouteName}. Gate {gate} Seat {seat}. {baggage}.'
 
     };
+
+    /**
+     * Создает текстовый шаблон в зависимости от типа транспорта.
+     *
+     * @param {string} template Шаблон текста для заполнения.
+     * @param {object} card Крточка-объект точки маршрута.
+     */
 
     function applyTemplate(template, card) {
         return Object.keys(card).reduce(function(pref, field) {
