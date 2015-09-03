@@ -6,6 +6,7 @@
  * @this {Sorter}
  * @param {object} arr Исходный json массив с посадочными карточками.
  * @param {object} opt Объект с параметрами.
+ * Расширить колличество типов маршрутов возможно через свойство Sorter.templates
  *
  */
 'use strict';
@@ -22,6 +23,7 @@ function Sorter(arr, opt){
         itemTag = options.itemTag,
         itemTagClassName = options.itemTagClassName,
         cards = options.cards,
+        mainObject = this,
         collection = {};
 
     /**
@@ -96,11 +98,10 @@ function Sorter(arr, opt){
         return node;
     }
 
-    var templates = {
+    this.templates = {
         train: 'Take train {number} from {name} to {nextRouteName}. Seat {seat}.',
         'bus': 'Take the airport bus from {name} to {nextRouteName}. {seat}.',
         'aircraft': 'From {name}, take flight {number} to {nextRouteName}. Gate {gate} Seat {seat}. {baggage}.'
-
     };
 
     /**
@@ -138,7 +139,7 @@ function Sorter(arr, opt){
             }
 
             cloneNode = node.cloneNode(false);
-            cloneNode.innerHTML = applyTemplate(templates[cnt.type], cnt);
+            cloneNode.innerHTML = applyTemplate(mainObject.templates[cnt.type], cnt);
             wrapper.appendChild(cloneNode);
             cnt = cnt.to;
         }
