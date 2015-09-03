@@ -32,15 +32,15 @@ function Sorter(arr, opt){
      */
     function Waypoint(point){
         this.name = point.name;
+        this.nextRouteName = point.to;
         this.from = point.from;
         this.to = point.to;
-        this.transport = {
-            type : point.type,
-            seat: point.seat,
-            gate: point.gate,
-            baggage: point.baggage,
-            number: point.number
-        }
+        this.type  = point.type;
+        this.seat = point.seat;
+        this.gate = point.gate;
+        this.baggage = point.baggage;
+        this.number = point.number;
+
     }
 
     /**
@@ -103,32 +103,19 @@ function Sorter(arr, opt){
      * @param {object} params объект с параметрами.
      * @return {string} Заполненный данными текстовый шаблон.
      */
-    function Templator(params){
-        var type = params.type || 'unknown type', //тип транспорта
-            number = params.number || 'without a number',// номер рейса
-            name = params.name || 'no name', // название пункта
-            seat = params.seat || 'no place', // номер места
-            gate = params.gate || 'without a number', // номер ворот
-            baggage = params.baggage || 'no data on baggage', // параметр багажа
-            nextRouteName = params.nextRouteName || 'end point of the route', // следующая точка
-            msg = '',
-            templates = {
-                'train': function(){
-                    msg = 'Take train '+ number +' from '+ name +' to ' + nextRouteName + '. Seat ' + seat +'.';
-                    return msg;
-                },
-                'bus': function(){
-                    msg = 'Take the airport bus from '+ name +' to ' + nextRouteName + '. ' + seat +'.';
-                    return msg;
-                },
-                'aircraft': function(){
-                    msg = 'From '+ name +', take flight '+ number +' to ' + nextRouteName + '. Gate '+ gate +'.'+ ' Seat ' + seat +'. ' + baggage + '.';
-                    return msg;
-                }
-            };
+    var templates = {
+        train: 'Take train {number} from {name} to {nextRouteName}. Seat {seat}.',
+        'bus': 'Take the airport bus from {name} to {nextRouteName}. {seat}.',
+        'aircraft': 'From {name}, take flight {number} to {nextRouteName}. Gate {gate} Seat {seat}. {baggage}.'
 
-        return msg = templates[type]();
+    };
+
+    function applyTemplate(template, card) {
+        return Object.keys(card).reduce(function(pref, field) {
+            return pref.replace('{' + field + '}', card[field]);
+        }, template);
     }
+
 
     /**
      * Проходит по объектам
@@ -145,23 +132,13 @@ function Sorter(arr, opt){
 
         while(cnt){
             if(cnt.to){
-                nextRouteName = cnt.to.name ;
+                nextRouteName = cnt.to.name;
             } else {
                 break;
             }
 
-            var params = {
-                type: cnt.transport.type,
-                number: cnt.transport.number,
-                name: cnt.name,
-                seat: cnt.transport.seat,
-                gate: cnt.transport.gate,
-                baggage: cnt.transport.baggage,
-                nextRouteName: cnt.to.name
-            };
-
             cloneNode = node.cloneNode(false);
-            cloneNode.innerHTML = Templator(params);
+            cloneNode.innerHTML = applyTemplate(templates[cnt.type], cnt);
             wrapper.appendChild(cloneNode);
             cnt = cnt.to;
         }
@@ -175,6 +152,7 @@ function Sorter(arr, opt){
         createLinks(collection);
         printRoute(collection);
     };
+
 };
 
 
