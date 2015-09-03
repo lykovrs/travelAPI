@@ -32,7 +32,7 @@ function Sorter(arr, opt){
      * @constructor
      * @param {object} point Объект точки маршрута.
      */
-    function Waypoint(point){
+    this.Waypoint = function(point){
         this.name = point.name;
         this.nextRouteName = point.to;
         this.from = point.from;
@@ -42,8 +42,7 @@ function Sorter(arr, opt){
         this.gate = point.gate;
         this.baggage = point.baggage;
         this.number = point.number;
-
-    }
+    };
 
     /**
      * Создает коллекцию объектов из карточек.
@@ -53,7 +52,7 @@ function Sorter(arr, opt){
     function createCollection(arr){
         for(var i = 0; i < arr.length; i++){
             var item = arr[i];
-            collection[item.name] = new Waypoint(item);
+            collection[item.name] = new mainObject.Waypoint(item);
         }
     }
 
